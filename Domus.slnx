@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/Domus.API/Domus.API.csproj" />
+  <Project Path="src/Domus.Core/Domus.Core.csproj" />
+  <Project Path="src/Domus.Infrastructure/Domus.Infrastructure.csproj" />
+</Solution>
