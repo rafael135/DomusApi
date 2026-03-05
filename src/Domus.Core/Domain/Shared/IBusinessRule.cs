@@ -1,0 +1,18 @@
+namespace Domus.Core.Domain.Shared;
+
+/// <summary>
+/// Defines a business rule within the domain.
+/// </summary>
+public interface IBusinessRule
+{
+    /// <summary>
+    /// Determines whether the business rule is broken.
+    /// </summary>
+    /// <returns>True if the business rule is broken; otherwise, false.</returns>
+    bool IsBroken();
+
+    /// <summary>
+    /// Gets the message associated with the business rule.
+    /// </summary>
+    string Message { get; }
+}
