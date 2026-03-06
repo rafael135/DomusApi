@@ -30,6 +30,7 @@ public class CreateTransactionTests(DomusApiFactory factory) : IntegrationTestBa
         return (user!.Id, cat!.Id);
     }
 
+    /// <summary>Verifica que uma transação de despesa válida retorna status 200.</summary>
     [Fact]
     public async Task POST_ValidExpenseTransaction_Returns200()
     {
@@ -54,6 +55,7 @@ public class CreateTransactionTests(DomusApiFactory factory) : IntegrationTestBa
         tx.Value.Should().Be(50.0m);
     }
 
+    /// <summary>Verifica que uma transação de renda para usuário adulto retorna status 200.</summary>
     [Fact]
     public async Task POST_ValidIncomeTransactionForAdult_Returns200()
     {
@@ -74,6 +76,7 @@ public class CreateTransactionTests(DomusApiFactory factory) : IntegrationTestBa
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
+    /// <summary>Verifica que usuário menor de idade não pode registrar renda, retornando status 422.</summary>
     [Fact]
     public async Task POST_UnderageUserWithIncomeType_Returns422()
     {
@@ -94,6 +97,7 @@ public class CreateTransactionTests(DomusApiFactory factory) : IntegrationTestBa
         response.StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
     }
 
+    /// <summary>Verifica que categoria incompatível com o tipo da transação retorna status 400.</summary>
     [Fact]
     public async Task POST_IncompatibleCategoryFinality_Returns400()
     {
@@ -115,6 +119,7 @@ public class CreateTransactionTests(DomusApiFactory factory) : IntegrationTestBa
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 
+    /// <summary>Verifica que categoria com finalidade Both aceita qualquer tipo de transação.</summary>
     [Fact]
     public async Task POST_CategoryWithBothFinality_AcceptsAnyType()
     {
@@ -148,6 +153,7 @@ public class CreateTransactionTests(DomusApiFactory factory) : IntegrationTestBa
         incomeResponse.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
+    /// <summary>Verifica que usuário inexistente retorna status 404.</summary>
     [Fact]
     public async Task POST_NonExistentUser_Returns404()
     {
@@ -172,6 +178,7 @@ public class CreateTransactionTests(DomusApiFactory factory) : IntegrationTestBa
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
+    /// <summary>Verifica que categoria inexistente retorna status 404.</summary>
     [Fact]
     public async Task POST_NonExistentCategory_Returns404()
     {
@@ -193,6 +200,7 @@ public class CreateTransactionTests(DomusApiFactory factory) : IntegrationTestBa
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
+    /// <summary>Verifica que valores não positivos (zero ou negativo) retornam status 400.</summary>
     [Theory]
     [InlineData(0)]
     [InlineData(-1)]

@@ -11,6 +11,7 @@ namespace Domus.Integration.Tests.Transactions;
 [Collection("IntegrationTests")]
 public class ListTransactionsTests(DomusApiFactory factory) : IntegrationTestBase(factory)
 {
+    /// <summary>Verifica que a listagem sem transações retorna uma página vazia com status 200.</summary>
     [Fact]
     public async Task GET_NoTransactions_ReturnsEmptyPage()
     {
@@ -21,6 +22,7 @@ public class ListTransactionsTests(DomusApiFactory factory) : IntegrationTestBas
         result!.items.Should().BeEmpty();
     }
 
+    /// <summary>Verifica que o filtro por userId retorna apenas as transações do usuário informado.</summary>
     [Fact]
     public async Task GET_FilterByUserId_ReturnsOnlyUserTransactions()
     {
@@ -68,6 +70,7 @@ public class ListTransactionsTests(DomusApiFactory factory) : IntegrationTestBas
         result.items.Should().ContainSingle(t => t.Description == "Alice tx");
     }
 
+    /// <summary>Verifica que o filtro por categoryId retorna apenas as transações da categoria informada.</summary>
     [Fact]
     public async Task GET_FilterByCategoryId_ReturnsOnlyCategoryTransactions()
     {

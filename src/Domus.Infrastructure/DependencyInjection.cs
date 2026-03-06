@@ -6,17 +6,16 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Domus.Infrastructure;
 
 /// <summary>
-/// Extension methods for registering infrastructure services.
+/// Métodos de extensão para registro dos serviços de infraestrutura.
 /// </summary>
 public static class DependencyInjection
 {
     /// <summary>
-    /// Adds infrastructure services to the service collection.
+    /// Registra os serviços de infraestrutura no contêiner de dependências.
     /// </summary>
-    /// <param name="services">The service collection to add infrastructure services to.</param>
-    /// <param name="configuration">The application configuration.</param>
-    /// <returns>The updated service collection.</returns>
-    /// <exception cref="InvalidOperationException">If the FalconDbContext is not configured properly.</exception>
+    /// <param name="services">Coleção de serviços onde os serviços serão registrados.</param>
+    /// <param name="configuration">Configuração da aplicação (appsettings).</param>
+    /// <returns>A própria <see cref="IServiceCollection"/> para encadeamento de chamadas.</returns>
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
         IConfiguration configuration

@@ -5,9 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Domus.Integration.Tests;
 
 /// <summary>
-/// Base class for all integration tests. Shares a single <see cref="DomusApiFactory"/>
-/// instance (and therefore a single container) across all tests in the same class,
-/// and cleans all tables between tests via <see cref="ResetDatabaseAsync"/>.
+/// Classe base para todos os testes de integração. Compartilha uma única instância de <see cref="DomusApiFactory"/>
+/// (e portanto um único container) entre todos os testes da mesma sessão, limpando as tabelas entre cada teste.
 /// </summary>
 public abstract class IntegrationTestBase : IAsyncLifetime
 {
@@ -25,8 +24,8 @@ public abstract class IntegrationTestBase : IAsyncLifetime
     public Task DisposeAsync() => Task.CompletedTask;
 
     /// <summary>
-    /// Deletes all rows from every table so each test starts with a clean database.
-    /// Order respects FK constraints (child tables first).
+    /// Remove todos os registros de todas as tabelas para garantir isolamento entre testes.
+    /// A ordem de exclusão respeita as restrições de chave estrangeira (tabelas filhas primeiro).
     /// </summary>
     protected async Task ResetDatabaseAsync()
     {

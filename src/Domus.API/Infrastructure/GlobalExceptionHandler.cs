@@ -7,27 +7,29 @@ using Microsoft.Extensions.Logging;
 namespace Domus.Api.Infrastructure;
 
 /// <summary>
-/// Handles exceptions globally and returns appropriate HTTP responses with problem details.
+/// Tratador global de exceções que mapeia erros de domínio para respostas HTTP com <see cref="ProblemDetails"/>.
 /// </summary>
 public class GlobalExceptionHandler : IExceptionHandler
 {
-    /// <summary>
-    /// Logger for logging exceptions.
-    /// </summary>
+    /// <summary>Logger para registro das exceções capturadas.</summary>
     private readonly ILogger<GlobalExceptionHandler> _logger;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GlobalExceptionHandler"/> class.
+    /// Inicializa o handler com o logger injetado.
     /// </summary>
-    /// <param name="logger">The logger to be used for logging exceptions.</param>
+    /// <param name="logger">Logger utilizado para registrar as exceções.</param>
     public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
     {
         _logger = logger;
     }
 
     /// <summary>
-    /// Attempts to handle the specified exception and write an appropriate <see cref="ProblemDetails"/> response to the HTTP context.
+    /// Tenta tratar a exceção e escreve uma resposta <see cref="ProblemDetails"/> adequada no contexto HTTP.
     /// </summary>
+    /// <param name="httpContext">Contexto HTTP da requisição atual.</param>
+    /// <param name="exception">A exceção capturada.</param>
+    /// <param name="cancellationToken">Token de cancelamento.</param>
+    /// <returns><c>true</c> se a exceção foi tratada; caso contrário, <c>false</c>.</returns>
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
         Exception exception,

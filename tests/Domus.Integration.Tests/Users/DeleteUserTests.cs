@@ -10,6 +10,7 @@ namespace Domus.Integration.Tests.Users;
 [Collection("IntegrationTests")]
 public class DeleteUserTests(DomusApiFactory factory) : IntegrationTestBase(factory)
 {
+    /// <summary>Verifica que a exclusão de um usuário existente retorna status 200.</summary>
     [Fact]
     public async Task DELETE_ExistingUser_Returns200()
     {
@@ -24,6 +25,7 @@ public class DeleteUserTests(DomusApiFactory factory) : IntegrationTestBase(fact
         deleteResponse.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
+    /// <summary>Verifica que tentar excluir um usuário inexistente retorna status 404.</summary>
     [Fact]
     public async Task DELETE_NonExistentUser_Returns404()
     {
@@ -32,6 +34,7 @@ public class DeleteUserTests(DomusApiFactory factory) : IntegrationTestBase(fact
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
+    /// <summary>Verifica que ao excluir um usuário suas transações são removidas em cascata.</summary>
     [Fact]
     public async Task DELETE_UserWithTransactions_CascadeDeletesTransactions()
     {

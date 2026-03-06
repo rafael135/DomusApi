@@ -5,13 +5,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Domus.Infrastructure.Database.Configurations;
 
 /// <summary>
-/// EF Core configuration for the <see cref="User"/> entity.
+/// Configuração de mapeamento EF Core para a entidade <see cref="User"/>.
 /// </summary>
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     /// <summary>
-    /// Configures the entity mapping for <see cref="User"/>.
+    /// Define as regras de mapeamento da entidade <see cref="User"/> para a tabela <c>Users</c>.
     /// </summary>
+    /// <param name="builder">Construtor de tipo utilizado para configurar a entidade.</param>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.ToTable("Users");

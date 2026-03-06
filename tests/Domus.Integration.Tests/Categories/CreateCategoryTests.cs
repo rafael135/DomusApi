@@ -8,6 +8,7 @@ namespace Domus.Integration.Tests.Categories;
 [Collection("IntegrationTests")]
 public class CreateCategoryTests(DomusApiFactory factory) : IntegrationTestBase(factory)
 {
+    /// <summary>Verifica que uma categoria de despesa válida é criada com sucesso e retorna status 200.</summary>
     [Fact]
     public async Task POST_ValidExpenseCategory_Returns200()
     {
@@ -25,6 +26,7 @@ public class CreateCategoryTests(DomusApiFactory factory) : IntegrationTestBase(
             .Be(Domus.Core.Domain.Transactions.Enums.TransactionCategoryType.Expense);
     }
 
+    /// <summary>Verifica que descrição vazia retorna status 400.</summary>
     [Fact]
     public async Task POST_EmptyDescription_Returns400()
     {
@@ -36,6 +38,7 @@ public class CreateCategoryTests(DomusApiFactory factory) : IntegrationTestBase(
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 
+    /// <summary>Verifica que todos os tipos de finalidade (1=Despesa, 2=Renda, 3=Ambos) retornam status 200 ao criar categoria.</summary>
     [Theory]
     [InlineData(1)] // Expense
     [InlineData(2)] // Income

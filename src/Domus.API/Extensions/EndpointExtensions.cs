@@ -5,17 +5,17 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Domus.Api.Extensions;
 
 /// <summary>
-/// Extension methods to discover and register Minimal API endpoints that implement <see cref="IEndpoint"/>.
+/// Métodos de extensão para descoberta e registro automático de endpoints que implementam <see cref="IEndpoint"/>.
 /// </summary>
 public static class EndpointExtensions
 {
     /// <summary>
-    /// Scans the given <paramref name="assembly"/> for types implementing <see cref="IEndpoint"/>
-    /// and registers them as scoped services.
+    /// Varre o <paramref name="assembly"/> em busca de tipos que implementam <see cref="IEndpoint"/>
+    /// e os registra como serviços no contêiner de dependências.
     /// </summary>
-    /// <param name="services">The service collection to register endpoints into.</param>
-    /// <param name="assembly">The assembly to scan for endpoint implementations.</param>
-    /// <returns>The original <see cref="IServiceCollection"/> for chaining.</returns>
+    /// <param name="services">Coleção de serviços onde os endpoints serão registrados.</param>
+    /// <param name="assembly">Assembly a ser varrido em busca de implementações de <see cref="IEndpoint"/>.</param>
+    /// <returns>A própria <see cref="IServiceCollection"/> para encadeamento de chamadas.</returns>
     public static IServiceCollection AddEndpoints(
         this IServiceCollection services,
         Assembly assembly
@@ -34,11 +34,11 @@ public static class EndpointExtensions
     }
 
     /// <summary>
-    /// Resolves all registered <see cref="IEndpoint"/> instances and calls <see cref="IEndpoint.MapEndpoint(IEndpointRouteBuilder)"/>
-    /// to add routes to the provided <paramref name="app"/> route builder.
+    /// Resolve todos os <see cref="IEndpoint"/> registrados e chama <see cref="IEndpoint.MapEndpoint"/>
+    /// adicionando as rotas ao <paramref name="app"/> fornecido.
     /// </summary>
-    /// <param name="app">The route builder where endpoints will be mapped.</param>
-    /// <returns>The same <see cref="IEndpointRouteBuilder"/> for chaining.</returns>
+    /// <param name="app">O route builder onde os endpoints serão mapeados.</param>
+    /// <returns>O próprio <see cref="IEndpointRouteBuilder"/> para encadeamento de chamadas.</returns>
     public static IEndpointRouteBuilder MapEndpoints(this IEndpointRouteBuilder app)
     {
         var scope = app.ServiceProvider.CreateScope();

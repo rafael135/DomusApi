@@ -8,6 +8,7 @@ namespace Domus.Core.Tests.Categories
 {
     public class TransactionCategoryTests
     {
+        /// <summary>Verifica que a criação com dados válidos retorna uma categoria com ID, descrição e finalidade corretos.</summary>
         [Fact]
         public void Create_WithValidData_ShouldSucceed()
         {
@@ -17,6 +18,7 @@ namespace Domus.Core.Tests.Categories
             cat.Finality.Should().Be(TransactionCategoryType.Expense);
         }
 
+        /// <summary>Verifica que a criação com descrição nula, vazia ou apenas espaços lança <see cref="FormException"/> com o campo &quot;description&quot;.</summary>
         [Theory]
         [InlineData(null)]
         [InlineData("")]

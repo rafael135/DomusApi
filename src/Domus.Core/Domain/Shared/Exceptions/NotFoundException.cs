@@ -1,15 +1,15 @@
 namespace Domus.Core.Domain.Shared.Exceptions;
 
 /// <summary>
-/// Exception thrown when a requested entity could not be found.
+/// Exceção lançada quando uma entidade solicitada não é encontrada.
 /// </summary>
 public class NotFoundException : DomainException
 {
     /// <summary>
-    /// Creates a new <see cref="NotFoundException"/> for the specified entity name and key.
+    /// Cria uma nova <see cref="NotFoundException"/> para a entidade e chave especificadas.
     /// </summary>
-    /// <param name="name">The entity name.</param>
-    /// <param name="key">The key that was not found.</param>
+    /// <param name="name">Nome da entidade não encontrada.</param>
+    /// <param name="key">Chave utilizada na busca.</param>
     public NotFoundException(string name, object key)
-        : base($"Entity \"{name}\" ({key}) was not found.") { }
+        : base($"Entidade \"{name}\" ({key}) não foi encontrada.") { }
 }

@@ -8,8 +8,15 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Domus.Api.Features.Transactions.CreateTransaction;
 
+/// <summary>
+/// Endpoint para registro de uma nova transação financeira. Rota: <c>POST /api/transactions</c>.
+/// </summary>
 public class CreateTransactionEndpoint : IEndpoint
 {
+    /// <summary>
+    /// Mapeia a rota e o handler no <paramref name="app"/> fornecido.
+    /// </summary>
+    /// <param name="app">O <see cref="IEndpointRouteBuilder"/> onde a rota será registrada.</param>
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost(

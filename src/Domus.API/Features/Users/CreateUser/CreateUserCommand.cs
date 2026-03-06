@@ -3,8 +3,8 @@ using MediatR;
 namespace Domus.Api.Features.Users.CreateUser;
 
 /// <summary>
-/// Command to create a new user.
+/// Comando para criar um novo usuário.
 /// </summary>
-/// <param name="Name">The name of the user to create.</param>
-/// <param name="Age">The age of the user to create.</param>
+/// <param name="Name">Nome do usuário a ser criado.</param>
+/// <param name="Age">Idade do usuário a ser criado.</param>
 public record CreateUserCommand(string Name, int Age) : IRequest<CreateUserResult>;

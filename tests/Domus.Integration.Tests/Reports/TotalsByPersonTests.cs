@@ -10,6 +10,7 @@ namespace Domus.Integration.Tests.Reports;
 [Collection("IntegrationTests")]
 public class TotalsByPersonTests(DomusApiFactory factory) : IntegrationTestBase(factory)
 {
+    /// <summary>Verifica que sem usuários cadastrados o endpoint retorna uma lista vazia com totais zerados.</summary>
     [Fact]
     public async Task GET_NoUsers_ReturnsEmptyListWithZeroTotals()
     {
@@ -23,6 +24,7 @@ public class TotalsByPersonTests(DomusApiFactory factory) : IntegrationTestBase(
         result.NetBalance.Should().Be(0);
     }
 
+    /// <summary>Verifica que usuário sem transações aparece no relatório com saldo zero.</summary>
     [Fact]
     public async Task GET_UserWithNoTransactions_AppearsWithZeroBalance()
     {
@@ -38,6 +40,7 @@ public class TotalsByPersonTests(DomusApiFactory factory) : IntegrationTestBase(
         person.Balance.Should().Be(0);
     }
 
+    /// <summary>Verifica que os totais calculados para um usuário com transações estão corretos.</summary>
     [Fact]
     public async Task GET_UserWithTransactions_CalculatesTotalsCorrectly()
     {
@@ -99,6 +102,7 @@ public class TotalsByPersonTests(DomusApiFactory factory) : IntegrationTestBase(
         result.NetBalance.Should().Be(1200m);
     }
 
+    /// <summary>Verifica que os totais de múltiplos usuários são somados corretamente e individualmente.</summary>
     [Fact]
     public async Task GET_MultipleUsers_SumsTotalsCorrectly()
     {

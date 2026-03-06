@@ -16,6 +16,7 @@ namespace Domus.Core.Tests.Transactions
         private TransactionCategory CreateCategory(TransactionCategoryType finality) =>
             TransactionCategory.Create("Cat", finality);
 
+        /// <summary>Verifica que a criação com dados válidos (receita, categoria compatível) retorna uma transação corretamente inicializada.</summary>
         [Fact]
         public void Create_WithValidIncomeAndCompatibleCategory_ShouldSucceed()
         {
@@ -32,6 +33,7 @@ namespace Domus.Core.Tests.Transactions
             tx.UserId.Should().Be(user.Id);
         }
 
+        /// <summary>Verifica que valores zero ou negativos lançam <see cref="FormException"/> com o campo &quot;value&quot;.</summary>
         [Theory]
         [InlineData(0)]
         [InlineData(-10)]
@@ -47,6 +49,7 @@ namespace Domus.Core.Tests.Transactions
                 .Where(e => ((FormException)e).Errors.ContainsKey("value"));
         }
 
+        /// <summary>Verifica que descrição nula, vazia ou apenas espaços lança <see cref="FormException"/> com o campo &quot;description&quot;.</summary>
         [Theory]
         [InlineData(null)]
         [InlineData("")]
@@ -63,6 +66,7 @@ namespace Domus.Core.Tests.Transactions
                 .Where(e => ((FormException)e).Errors.ContainsKey("description"));
         }
 
+        /// <summary>Verifica que uma categoria de despesa não pode ser usada em transação de receita (e vice-versa), lançando <see cref="FormException"/> com o campo &quot;type&quot;.</summary>
         [Fact]
         public void Create_WithIncompatibleCategoryAndType_ShouldThrow()
         {
@@ -83,6 +87,7 @@ namespace Domus.Core.Tests.Transactions
                 .Where(e => ((FormException)e).Errors.ContainsKey("type"));
         }
 
+        /// <summary>Verifica que um usuário menor de 18 anos não pode registrar transação de receita, lançando <see cref="BusinessRuleException"/>.</summary>
         [Fact]
         public void Create_UnderageIncome_ShouldThrowBusinessRuleException()
         {

@@ -4,34 +4,34 @@ using Domus.Core.Domain.Shared.Exceptions;
 namespace Domus.Core;
 
 /// <summary>
-/// Base class for all entities in the domain.
+/// Classe base para todas as entidades do domínio.
 /// </summary>
 public abstract class Entity
 {
     /// <summary>
-    /// The unique identifier of the entity.
+    /// Identificador único da entidade.
     /// </summary>
     public Guid Id { get; protected set; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Entity"/> class.
+    /// Construtor protegido para uso pelo EF Core.
     /// </summary>
     protected Entity() { }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Entity"/> class with the specified ID.
+    /// Inicializa a entidade com um identificador específico.
     /// </summary>
-    /// <param name="id">The unique identifier for the entity.</param>
+    /// <param name="id">O identificador único da entidade.</param>
     protected Entity(Guid id)
     {
         Id = id;
     }
 
     /// <summary>
-    /// Determines whether the specified object is equal to the current entity.
+    /// Determina se o objeto especificado é igual à entidade atual, comparando por identidade (<see cref="Id"/>).
     /// </summary>
-    /// <param name="obj">The object to compare with the current entity.</param>
-    /// <returns><c>true</c> if the specified object is equal to the current entity; otherwise, <c>false</c>.</returns>
+    /// <param name="obj">O objeto a ser comparado com a entidade atual.</param>
+    /// <returns><c>true</c> se os objetos são do mesmo tipo e possuem o mesmo <see cref="Id"/>; caso contrário, <c>false</c>.</returns>
     public override bool Equals(object? obj)
     {
         if (obj is not Entity other)
@@ -58,19 +58,18 @@ public abstract class Entity
     }
 
     /// <summary>
-    /// Returns a hash code for the entity.
+    /// Retorna o código de hash da entidade baseado no tipo e no <see cref="Id"/>.
     /// </summary>
-    /// <returns>A hash code for the current entity.</returns>
+    /// <returns>Código de hash da entidade.</returns>
     public override int GetHashCode()
     {
         return (GetType().ToString() + Id).GetHashCode();
     }
 
     /// <summary>
-    /// Checks the specified business rule and throws a <see cref="BusinessRuleException"/> if the rule is broken.
+    /// Verifica a regra de negócio especificada e lança <see cref="BusinessRuleException"/> caso a regra seja violada.
     /// </summary>
-    /// <param name="rule">The business rule to check.</param>
-    /// <exception cref="BusinessRuleException">Thrown when the business rule is broken.</exception>
+    /// <param name="rule">A regra de negócio a ser avaliada.</param>
     protected static void CheckRule(IBusinessRule rule)
     {
         if (rule.IsBroken())

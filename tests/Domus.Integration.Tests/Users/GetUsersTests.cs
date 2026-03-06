@@ -9,6 +9,7 @@ namespace Domus.Integration.Tests.Users;
 [Collection("IntegrationTests")]
 public class GetUsersTests(DomusApiFactory factory) : IntegrationTestBase(factory)
 {
+    /// <summary>Verifica que a listagem sem usuários retorna uma página vazia com status 200.</summary>
     [Fact]
     public async Task GET_NoUsers_ReturnsEmptyPage()
     {
@@ -20,6 +21,7 @@ public class GetUsersTests(DomusApiFactory factory) : IntegrationTestBase(factor
         result.totalItems.Should().Be(0);
     }
 
+    /// <summary>Verifica que após criação de usuários, a listagem retorna todos os registros.</summary>
     [Fact]
     public async Task GET_AfterCreation_ReturnsUser()
     {
@@ -35,6 +37,7 @@ public class GetUsersTests(DomusApiFactory factory) : IntegrationTestBase(factor
         result.items.Should().ContainSingle(u => u.Name == "Bob");
     }
 
+    /// <summary>Verifica que o filtro por searchTerm retorna apenas usuários cujo nome contém o termo informado.</summary>
     [Fact]
     public async Task GET_WithSearchTerm_FiltersResults()
     {

@@ -8,6 +8,7 @@ namespace Domus.Integration.Tests.Users;
 [Collection("IntegrationTests")]
 public class UpdateUserTests(DomusApiFactory factory) : IntegrationTestBase(factory)
 {
+    /// <summary>Verifica que a atualização de um usuário existente retorna status 200 com os dados atualizados.</summary>
     [Fact]
     public async Task PUT_ExistingUser_Returns200WithUpdatedData()
     {
@@ -29,6 +30,7 @@ public class UpdateUserTests(DomusApiFactory factory) : IntegrationTestBase(fact
         updated.Id.Should().Be(created.Id);
     }
 
+    /// <summary>Verifica que tentar atualizar um usuário inexistente retorna status 404.</summary>
     [Fact]
     public async Task PUT_NonExistentUser_Returns404()
     {
@@ -40,6 +42,7 @@ public class UpdateUserTests(DomusApiFactory factory) : IntegrationTestBase(fact
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
+    /// <summary>Verifica que dados inválidos (ex: nome vazio) retornam status 400.</summary>
     [Fact]
     public async Task PUT_InvalidData_Returns400()
     {

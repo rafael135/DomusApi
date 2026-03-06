@@ -1,17 +1,19 @@
 namespace Domus.Core.Domain.Shared.Exceptions;
 
 /// <summary>
-/// Exception that represents a collection of validation errors for form-like inputs.
+/// Exceção que representa um conjunto de erros de validação de campos de entrada.
 /// </summary>
 public class FormException : DomainException
 {
-    /// <summary>A dictionary mapping field keys to error messages.</summary>
+    /// <summary>Dicionário mapeando o nome do campo ao respectivo erro de validação.</summary>
     public Dictionary<string, string> Errors { get; }
 
-    /// <summary>Creates a new <see cref="FormException"/> with the provided errors.</summary>
-    /// <param name="errors">A dictionary of field errors.</param>
+    /// <summary>
+    /// Cria uma nova <see cref="FormException"/> com os erros de validação fornecidos.
+    /// </summary>
+    /// <param name="errors">Dicionário de erros por campo.</param>
     public FormException(Dictionary<string, string> errors)
-        : base("One or more validation errors occurred.")
+        : base("Um ou mais erros de validação ocorreram.")
     {
         Errors = errors;
     }

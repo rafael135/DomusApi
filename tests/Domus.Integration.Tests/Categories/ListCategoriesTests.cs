@@ -10,6 +10,7 @@ namespace Domus.Integration.Tests.Categories;
 [Collection("IntegrationTests")]
 public class ListCategoriesTests(DomusApiFactory factory) : IntegrationTestBase(factory)
 {
+    /// <summary>Verifica que a listagem sem categorias retorna uma página vazia com status 200.</summary>
     [Fact]
     public async Task GET_NoCategories_ReturnsEmptyPage()
     {
@@ -20,6 +21,7 @@ public class ListCategoriesTests(DomusApiFactory factory) : IntegrationTestBase(
         result!.items.Should().BeEmpty();
     }
 
+    /// <summary>Verifica que após criação de categorias, a listagem retorna todos os registros.</summary>
     [Fact]
     public async Task GET_AfterCreation_ReturnsAllCategories()
     {
@@ -35,6 +37,7 @@ public class ListCategoriesTests(DomusApiFactory factory) : IntegrationTestBase(
         result!.totalItems.Should().Be(2);
     }
 
+    /// <summary>Verifica que o filtro por finalidade retorna apenas as categorias correspondentes.</summary>
     [Fact]
     public async Task GET_FilterByFinality_ReturnsOnlyMatchingCategories()
     {

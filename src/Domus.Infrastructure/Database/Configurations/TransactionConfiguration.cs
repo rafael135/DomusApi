@@ -2,8 +2,15 @@ using Domus.Core.Domain.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+/// <summary>
+/// Configuração de mapeamento EF Core para a entidade <see cref="Transaction"/>.
+/// </summary>
 public class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
 {
+    /// <summary>
+    /// Define as regras de mapeamento da entidade <see cref="Transaction"/> para a tabela <c>Transactions</c>.
+    /// </summary>
+    /// <param name="builder">Construtor de tipo utilizado para configurar a entidade.</param>
     public void Configure(EntityTypeBuilder<Transaction> builder)
     {
         builder.ToTable("Transactions");

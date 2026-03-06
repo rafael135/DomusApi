@@ -10,6 +10,7 @@ namespace Domus.Integration.Tests.Reports;
 [Collection("IntegrationTests")]
 public class TotalsByCategoryTests(DomusApiFactory factory) : IntegrationTestBase(factory)
 {
+    /// <summary>Verifica que sem categorias cadastradas o endpoint retorna uma lista vazia com totais zerados.</summary>
     [Fact]
     public async Task GET_NoCategories_ReturnsEmptyListWithZeroTotals()
     {
@@ -23,6 +24,7 @@ public class TotalsByCategoryTests(DomusApiFactory factory) : IntegrationTestBas
         result.NetBalance.Should().Be(0);
     }
 
+    /// <summary>Verifica que categoria sem transações aparece no relatório com saldo zero.</summary>
     [Fact]
     public async Task GET_CategoryWithNoTransactions_AppearsWithZeroBalance()
     {
@@ -38,6 +40,7 @@ public class TotalsByCategoryTests(DomusApiFactory factory) : IntegrationTestBas
         cat.Balance.Should().Be(0);
     }
 
+    /// <summary>Verifica que os totais calculados para uma categoria com transações estão corretos.</summary>
     [Fact]
     public async Task GET_CategoryWithTransactions_CalculatesTotalsCorrectly()
     {
@@ -86,6 +89,7 @@ public class TotalsByCategoryTests(DomusApiFactory factory) : IntegrationTestBas
         result.NetBalance.Should().Be(550m);
     }
 
+    /// <summary>Verifica que os totais de múltiplas categorias são somados corretamente e individualmente.</summary>
     [Fact]
     public async Task GET_MultipleCategories_SumsTotalsCorrectly()
     {

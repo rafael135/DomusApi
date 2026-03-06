@@ -3,7 +3,7 @@ using Domus.Api.Features.Users.Shared;
 namespace Domus.Api.Features.Users.CreateUser;
 
 /// <summary>
-/// Result containing detailed user information.
+/// Resultado da operação de criação de usuário, contendo os dados do usuário criado.
 /// </summary>
-/// <param name="User">The detailed user information.</param>
+/// <param name="User">DTO com os dados do usuário criado.</param>
 public record CreateUserResult(UserDto User);

@@ -7,17 +7,31 @@ using Microsoft.Extensions.Logging;
 
 namespace Domus.Api.Features.Users.UpdateUser;
 
+/// <summary>
+/// Handler MediatR responsável por atualizar os dados de um usuário existente.
+/// </summary>
 public class UpdateUserHandler : IRequestHandler<UpdateUserCommand, UpdateUserResult>
 {
     private readonly DomusDbContext _dbContext;
     private readonly ILogger<UpdateUserHandler> _logger;
 
+    /// <summary>
+    /// Inicializa o handler com o contexto de banco de dados e o logger.
+    /// </summary>
+    /// <param name="dbContext">Contexto do banco de dados.</param>
+    /// <param name="logger">Logger para registro de eventos.</param>
     public UpdateUserHandler(DomusDbContext dbContext, ILogger<UpdateUserHandler> logger)
     {
         _dbContext = dbContext;
         _logger = logger;
     }
 
+    /// <summary>
+    /// Processa o comando de atualização de usuário.
+    /// </summary>
+    /// <param name="request">Comando contendo o ID e os novos dados do usuário.</param>
+    /// <param name="cancellationToken">Token de cancelamento.</param>
+    /// <returns>Resultado com os dados atualizados do usuário.</returns>
     public async Task<UpdateUserResult> Handle(
         UpdateUserCommand request,
         CancellationToken cancellationToken

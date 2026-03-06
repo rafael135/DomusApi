@@ -8,17 +8,14 @@ using Microsoft.AspNetCore.Routing;
 namespace Domus.Api.Features.Users.CreateUser;
 
 /// <summary>
-/// Endpoint for creating a new user.
+/// Endpoint para criação de um novo usuário. Rota: <c>POST /api/users</c>.
 /// </summary>
-/// <remarks>
-/// Example request: { "name": "Alice", "age": 25 }
-/// </remarks>
 public class CreateUserEndpoint : IEndpoint
 {
     /// <summary>
-    /// Maps the endpoint to the application route builder.
+    /// Mapeia a rota e o handler no <paramref name="app"/> fornecido.
     /// </summary>
-    /// <param name="app">The endpoint route builder.</param>
+    /// <param name="app">O <see cref="IEndpointRouteBuilder"/> onde a rota será registrada.</param>
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost(

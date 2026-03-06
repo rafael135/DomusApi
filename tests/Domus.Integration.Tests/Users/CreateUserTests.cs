@@ -8,6 +8,7 @@ namespace Domus.Integration.Tests.Users;
 [Collection("IntegrationTests")]
 public class CreateUserTests(DomusApiFactory factory) : IntegrationTestBase(factory)
 {
+    /// <summary>Verifica que um payload válido retorna status 200 com os dados do usuário criado.</summary>
     [Fact]
     public async Task POST_ValidPayload_Returns200WithUser()
     {
@@ -20,6 +21,7 @@ public class CreateUserTests(DomusApiFactory factory) : IntegrationTestBase(fact
         user.Age.Should().Be(25);
     }
 
+    /// <summary>Verifica que nome vazio retorna status 400.</summary>
     [Fact]
     public async Task POST_EmptyName_Returns400()
     {
@@ -28,6 +30,7 @@ public class CreateUserTests(DomusApiFactory factory) : IntegrationTestBase(fact
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 
+    /// <summary>Verifica que idades inválidas (fora do intervalo 0–120) retornam status 400.</summary>
     [Theory]
     [InlineData(-1)]
     [InlineData(121)]

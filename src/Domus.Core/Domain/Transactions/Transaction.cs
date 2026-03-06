@@ -5,19 +5,41 @@ using Domus.Core.Domain.Users;
 
 namespace Domus.Core.Domain.Transactions;
 
+/// <summary>
+/// Representa uma transação financeira (receita ou despesa) associada a um usuário e a uma categoria.
+/// </summary>
 public class Transaction : Entity
 {
+    /// <summary>Descrição da transação.</summary>
     public string Description { get; private set; }
+    /// <summary>Valor monetário da transação (deve ser maior que zero).</summary>
     public Decimal Value { get; private set; }
+    /// <summary>Tipo da transação: receita ou despesa.</summary>
     public TransactionType Type { get; private set; }
+    /// <summary>Identificador da categoria associada.</summary>
     public Guid TransactionCategoryId { get; private set; }
+    /// <summary>Categoria associada à transação.</summary>
     public virtual TransactionCategory TransactionCategory { get; private set; }
 
+    /// <summary>Identificador do usuário proprietário da transação.</summary>
     public Guid UserId { get; private set; }
+    /// <summary>Usuário proprietário da transação.</summary>
     public virtual User User { get; private set; }
 
+    /// <summary>
+    /// Construtor protegido para uso pelo EF Core.
+    /// </summary>
     protected Transaction() { }
 
+    /// <summary>
+    /// Cria uma nova transação aplicando validações de domínio e regras de negócio.
+    /// </summary>
+    /// <param name="description">Descrição da transação.</param>
+    /// <param name="value">Valor da transação (deve ser maior que zero).</param>
+    /// <param name="type">Tipo da transação (receita ou despesa).</param>
+    /// <param name="transactionCategory">Categoria associada à transação.</param>
+    /// <param name="user">Usuário responsável pela transação.</param>
+    /// <returns>Nova instância de <see cref="Transaction"/>.</returns>
     public static Transaction Create(
         string description,
         decimal value,

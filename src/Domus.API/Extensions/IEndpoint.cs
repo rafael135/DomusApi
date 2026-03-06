@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Routing;
 namespace Domus.Api.Extensions;
 
 /// <summary>
-/// Minimal abstraction for a discoverable endpoint that knows how to map itself into an <see cref="IEndpointRouteBuilder"/>.
-/// Implement this interface for feature-specific endpoint registration using the project's endpoint discovery mechanism.
+/// Abstração mínima para endpoints descobríveis que sabem como se registrar em um <see cref="IEndpointRouteBuilder"/>.
+/// Implemente esta interface para registrar endpoints por feature usando o mecanismo de descoberta automática do projeto.
 /// </summary>
 public interface IEndpoint
 {
     /// <summary>
-    /// Maps routes and handlers to the provided <paramref name="app"/> route builder.
+    /// Mapeia as rotas e handlers no <paramref name="app"/> fornecido.
     /// </summary>
-    /// <param name="app">The <see cref="IEndpointRouteBuilder"/> to add routes to.</param>
+    /// <param name="app">O <see cref="IEndpointRouteBuilder"/> onde as rotas serão registradas.</param>
     void MapEndpoint(IEndpointRouteBuilder app);
 }

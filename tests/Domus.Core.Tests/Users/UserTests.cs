@@ -11,6 +11,7 @@ namespace Domus.Core.Tests.Users
 {
     public class UserTests
     {
+        /// <summary>Verifica que a criação com dados válidos retorna um usuário com ID, nome, idade corretos e sem transações.</summary>
         [Fact]
         public void Create_WithValidData_ShouldReturnUser()
         {
@@ -28,6 +29,7 @@ namespace Domus.Core.Tests.Users
             user.Transactions.Should().BeEmpty();
         }
 
+        /// <summary>Verifica que nome nulo, vazio ou apenas espaços lança <see cref="FormException"/> com o campo &quot;name&quot;.</summary>
         [Theory]
         [InlineData(null)]
         [InlineData("")]
@@ -40,6 +42,7 @@ namespace Domus.Core.Tests.Users
                 .Where(e => ((FormException)e).Errors.ContainsKey("name"));
         }
 
+        /// <summary>Verifica que idades fora do intervalo 0-120 lançam <see cref="FormException"/> com o campo &quot;age&quot;.</summary>
         [Theory]
         [InlineData(-1)]
         [InlineData(121)]
@@ -51,6 +54,7 @@ namespace Domus.Core.Tests.Users
                 .Where(e => ((FormException)e).Errors.ContainsKey("age"));
         }
 
+        /// <summary>Verifica que um usuário menor de 18 anos não pode registrar transação de receita, lançando <see cref="BusinessRuleException"/>.</summary>
         [Fact]
         public void RegisterTransaction_WithUnderageIncome_ShouldThrowBusinessRuleException()
         {
@@ -63,6 +67,7 @@ namespace Domus.Core.Tests.Users
             user.Transactions.Should().BeEmpty();
         }
 
+        /// <summary>Verifica que o registro de uma despesa válida adiciona a transação à coleção do usuário.</summary>
         [Fact]
         public void RegisterTransaction_WithValidExpense_ShouldAddTransaction()
         {
@@ -74,6 +79,7 @@ namespace Domus.Core.Tests.Users
             user.Transactions.First().Description.Should().Be("lunch");
         }
 
+        /// <summary>Verifica que tentar remover uma transação que não pertence ao usuário lança <see cref="FormException"/> com o campo &quot;transaction&quot;.</summary>
         [Fact]
         public void RemoveTransaction_NotInUser_ShouldThrow()
         {
@@ -88,6 +94,7 @@ namespace Domus.Core.Tests.Users
                 .Where(e => ((FormException)e).Errors.ContainsKey("transaction"));
         }
 
+        /// <summary>Verifica que a remoção de uma transação existente a elimina da coleção do usuário.</summary>
         [Fact]
         public void RemoveTransaction_WithExistingTransaction_ShouldRemove()
         {

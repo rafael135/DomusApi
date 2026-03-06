@@ -6,17 +6,15 @@ using Microsoft.Extensions.Configuration;
 namespace Domus.Infrastructure.Database;
 
 /// <summary>
-/// DomusDbContextFactory is used by EF Core tools at design time to create
-/// instances of DomusDbContext for things like migrations.
+/// Fábrica de <see cref="DomusDbContext"/> utilizada pelas ferramentas de design-time do EF Core (ex: migrations).
 /// </summary>
 public class DomusDbContextFactory : IDesignTimeDbContextFactory<DomusDbContext>
 {
     /// <summary>
-    /// Creates a <see cref="DomusDbContext"/> instance for design-time tools such as migrations.
-    /// The factory reads configuration files from the API project folder to obtain the connection string.
+    /// Cria uma instância de <see cref="DomusDbContext"/> lendo a string de conexão dos arquivos de configuração do projeto de API.
     /// </summary>
-    /// <param name="args">Design-time arguments (not used).</param>
-    /// <returns>An initialized <see cref="DomusDbContext"/>.</returns>
+    /// <param name="args">Argumentos de design-time (não utilizados).</param>
+    /// <returns>Instância configurada de <see cref="DomusDbContext"/>.</returns>
     public DomusDbContext CreateDbContext(string[] args)
     {
         // 1. Configures where to read the connection string

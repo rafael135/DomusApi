@@ -7,8 +7,15 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Domus.Api.Features.Transactions.ListTransaction;
 
+/// <summary>
+/// Endpoint para listagem paginada de transações. Rota: <c>GET /api/transactions</c>.
+/// </summary>
 public class ListTransactionsEndpoint : IEndpoint
 {
+    /// <summary>
+    /// Mapeia a rota e o handler no <paramref name="app"/> fornecido.
+    /// </summary>
+    /// <param name="app">O <see cref="IEndpointRouteBuilder"/> onde a rota será registrada.</param>
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet(

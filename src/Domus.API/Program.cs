@@ -12,18 +12,17 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add infrastructure services (now includes JWT authentication configuration)
+// Registra os serviços de infraestrutura (banco de dados, cache, etc.)
 builder.Services.AddInfrastructure(builder.Configuration);
 
 ConfigurationManager configuration = builder.Configuration;
 
-// Add MediatR services - Searchs for handlers in the current assembly
+// Registra o MediatR buscando handlers no assembly atual
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly())
 );
 
-// Add services to the container.
-
+// Registra todos os endpoints que implementam IEndpoint
 builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -37,7 +36,7 @@ builder.Services.AddCors(options =>
     );
 });
 
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+// Configura o OpenAPI (Scalar)
 builder.Services.AddOpenApi(options =>
 {
     options.OpenApiVersion = OpenApiSpecVersion.OpenApi3_0;
@@ -75,7 +74,7 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowFrontend");
 
-// Map all endpoints
+// Mapeia todos os endpoints registrados
 // app.MapAllEndpoints();
 app.MapEndpoints();
 

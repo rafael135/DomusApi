@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace Domus.Api.Features.Users.CreateUser;
 
 /// <summary>
-/// Handler for creating a new user.
+/// Handler MediatR responsável por criar um novo usuário no banco de dados.
 /// </summary>
 public class CreateUserHandler : IRequestHandler<CreateUserCommand, CreateUserResult>
 {
@@ -16,10 +16,10 @@ public class CreateUserHandler : IRequestHandler<CreateUserCommand, CreateUserRe
     private readonly ILogger<CreateUserHandler> _logger;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="CreateUserHandler"/> class.
+    /// Inicializa o handler com o contexto de banco de dados e o logger.
     /// </summary>
-    /// <param name="dbContext">The database context for accessing user data.</param>
-    /// <param name="logger">The logger instance.</param>
+    /// <param name="dbContext">Contexto do banco de dados.</param>
+    /// <param name="logger">Logger para registro de eventos.</param>
     public CreateUserHandler(DomusDbContext dbContext, ILogger<CreateUserHandler> logger)
     {
         _dbContext = dbContext;
@@ -27,12 +27,11 @@ public class CreateUserHandler : IRequestHandler<CreateUserCommand, CreateUserRe
     }
 
     /// <summary>
-    /// Handles the create user command.
+    /// Processa o comando de criação de usuário.
     /// </summary>
-    /// <param name="request">The command containing the user information.</param>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>The result of the create user operation.</returns>
-    /// <exception cref="FormException">Thrown when the user data is invalid.</exception>
+    /// <param name="request">Comando contendo os dados do novo usuário.</param>
+    /// <param name="cancellationToken">Token de cancelamento.</param>
+    /// <returns>Resultado com os dados do usuário criado.</returns>
     public async Task<CreateUserResult> Handle(
         CreateUserCommand request,
         CancellationToken cancellationToken

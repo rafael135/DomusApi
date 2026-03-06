@@ -1,14 +1,14 @@
 namespace Domus.Core.Domain.Shared.Exceptions;
 
 /// <summary>
-/// Base exception class for domain-level errors.
+/// Exceção base para erros originados na camada de domínio.
 /// </summary>
 public class DomainException : Exception
 {
     /// <summary>
-    /// Creates a new <see cref="DomainException"/> with a message.
+    /// Cria uma nova <see cref="DomainException"/> com a mensagem especificada.
     /// </summary>
-    /// <param name="message">Error message.</param>
+    /// <param name="message">Mensagem descritiva do erro.</param>
     public DomainException(string message)
         : base(message) { }
 }
