@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domus.Infrastructure\Domus.Infrastructure.csproj" />
+    <ProjectReference Include="..\Domus.Core\Domus.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -12,6 +13,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.OpenApi" Version="1.6.23" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.12.6" />
   </ItemGroup>
 
   <PropertyGroup>

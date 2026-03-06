@@ -22,7 +22,6 @@ public class User : Entity
 
     public static User Create(string name, int age)
     {
-        // You can add any domain logic or validation here before creating the user
         if (string.IsNullOrWhiteSpace(name))
             throw new FormException(new Dictionary<string, string> { { "name", "Nome inválido" } });
 
