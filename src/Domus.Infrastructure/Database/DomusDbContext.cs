@@ -12,4 +12,10 @@ public class DomusDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<TransactionCategory> TransactionCategories { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(DomusDbContext).Assembly);
+        base.OnModelCreating(modelBuilder);
+    }
 }
