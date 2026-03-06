@@ -1,11 +1,11 @@
-using FluentAssertions;
-using Xunit;
-using Domus.Core.Domain.Users;
-using Domus.Core.Domain.Shared.Exceptions;
 using System.Linq;
+using Domus.Core.Domain.Shared.Exceptions;
+using Domus.Core.Domain.Transactions;
 using Domus.Core.Domain.Transactions;
 using Domus.Core.Domain.Transactions.Enums;
-using Domus.Core.Domain.Transactions;
+using Domus.Core.Domain.Users;
+using FluentAssertions;
+using Xunit;
 
 namespace Domus.Core.Tests.Users
 {
@@ -35,8 +35,9 @@ namespace Domus.Core.Tests.Users
         public void Create_WithInvalidName_ShouldThrow(string invalid)
         {
             Action act = () => User.Create(invalid, 25);
-            act.Should().Throw<FormException>()
-               .Where(e => ((FormException)e).Errors.ContainsKey("name"));
+            act.Should()
+                .Throw<FormException>()
+                .Where(e => ((FormException)e).Errors.ContainsKey("name"));
         }
 
         [Theory]
@@ -45,8 +46,9 @@ namespace Domus.Core.Tests.Users
         public void Create_WithInvalidAge_ShouldThrow(int invalidAge)
         {
             Action act = () => User.Create("Bob", invalidAge);
-            act.Should().Throw<FormException>()
-               .Where(e => ((FormException)e).Errors.ContainsKey("age"));
+            act.Should()
+                .Throw<FormException>()
+                .Where(e => ((FormException)e).Errors.ContainsKey("age"));
         }
 
         [Fact]
@@ -55,7 +57,8 @@ namespace Domus.Core.Tests.Users
             var user = User.Create("Kid", 16);
             var category = TransactionCategory.Create("Salary", TransactionCategoryType.Income);
 
-            Action act = () => user.RegisterTransaction("salary", 100, category, TransactionType.Income);
+            Action act = () =>
+                user.RegisterTransaction("salary", 100, category, TransactionType.Income);
             act.Should().Throw<BusinessRuleException>();
             user.Transactions.Should().BeEmpty();
         }
@@ -80,8 +83,9 @@ namespace Domus.Core.Tests.Users
             var tx = Transaction.Create("t", 10, TransactionType.Expense, category, otherUser);
 
             Action act = () => user.RemoveTransaction(tx);
-            act.Should().Throw<FormException>()
-               .Where(e => ((FormException)e).Errors.ContainsKey("transaction"));
+            act.Should()
+                .Throw<FormException>()
+                .Where(e => ((FormException)e).Errors.ContainsKey("transaction"));
         }
 
         [Fact]

@@ -26,15 +26,19 @@ public class DomusApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
         builder.ConfigureServices(services =>
         {
             // Remove the existing DbContext registration
-            var descriptor = services.SingleOrDefault(
-                d => d.ServiceType == typeof(DbContextOptions<DomusDbContext>));
+            var descriptor = services.SingleOrDefault(d =>
+                d.ServiceType == typeof(DbContextOptions<DomusDbContext>)
+            );
             if (descriptor is not null)
                 services.Remove(descriptor);
 
             // Register DbContext pointing to the test container
             services.AddDbContext<DomusDbContext>(options =>
-                options.UseSqlServer(_dbContainer.GetConnectionString(),
-                    sql => sql.MigrationsAssembly("Domus.Infrastructure")));
+                options.UseSqlServer(
+                    _dbContainer.GetConnectionString(),
+                    sql => sql.MigrationsAssembly("Domus.Infrastructure")
+                )
+            );
         });
     }
 

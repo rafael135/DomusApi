@@ -24,7 +24,10 @@ public class ListCategoriesTests(DomusApiFactory factory) : IntegrationTestBase(
     public async Task GET_AfterCreation_ReturnsAllCategories()
     {
         await Client.PostAsJsonAsync("/api/categories", new { description = "Food", finality = 1 });
-        await Client.PostAsJsonAsync("/api/categories", new { description = "Salary", finality = 2 });
+        await Client.PostAsJsonAsync(
+            "/api/categories",
+            new { description = "Salary", finality = 2 }
+        );
 
         var response = await Client.GetAsync("/api/categories");
 
@@ -35,9 +38,15 @@ public class ListCategoriesTests(DomusApiFactory factory) : IntegrationTestBase(
     [Fact]
     public async Task GET_FilterByFinality_ReturnsOnlyMatchingCategories()
     {
-        await Client.PostAsJsonAsync("/api/categories", new { description = "Food", finality = 1 });    // Expense
-        await Client.PostAsJsonAsync("/api/categories", new { description = "Salary", finality = 2 }); // Income
-        await Client.PostAsJsonAsync("/api/categories", new { description = "Mixed", finality = 3 });  // Both
+        await Client.PostAsJsonAsync("/api/categories", new { description = "Food", finality = 1 }); // Expense
+        await Client.PostAsJsonAsync(
+            "/api/categories",
+            new { description = "Salary", finality = 2 }
+        ); // Income
+        await Client.PostAsJsonAsync(
+            "/api/categories",
+            new { description = "Mixed", finality = 3 }
+        ); // Both
 
         var response = await Client.GetAsync("/api/categories?finality=1");
 

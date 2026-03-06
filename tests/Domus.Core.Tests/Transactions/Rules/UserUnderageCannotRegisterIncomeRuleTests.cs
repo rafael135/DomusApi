@@ -1,8 +1,8 @@
-using FluentAssertions;
-using Xunit;
+using Domus.Core.Domain.Transactions.Enums;
 using Domus.Core.Domain.Transactions.Rules;
 using Domus.Core.Domain.Users;
-using Domus.Core.Domain.Transactions.Enums;
+using FluentAssertions;
+using Xunit;
 
 namespace Domus.Core.Tests.Transactions.Rules
 {

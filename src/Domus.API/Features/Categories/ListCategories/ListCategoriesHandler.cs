@@ -7,7 +7,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Domus.Api.Features.Categories.ListCategories;
 
-public class ListCategoriesHandler : IRequestHandler<ListCategoriesQuery, PaginatedResult<CategoryDto>>
+public class ListCategoriesHandler
+    : IRequestHandler<ListCategoriesQuery, PaginatedResult<CategoryDto>>
 {
     private readonly DomusDbContext _dbContext;
     private readonly ILogger<ListCategoriesHandler> _logger;
@@ -18,7 +19,10 @@ public class ListCategoriesHandler : IRequestHandler<ListCategoriesQuery, Pagina
         _logger = logger;
     }
 
-    public async Task<PaginatedResult<CategoryDto>> Handle(ListCategoriesQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedResult<CategoryDto>> Handle(
+        ListCategoriesQuery request,
+        CancellationToken cancellationToken
+    )
     {
         var query = _dbContext.TransactionCategories.AsQueryable();
 
@@ -34,6 +38,12 @@ public class ListCategoriesHandler : IRequestHandler<ListCategoriesQuery, Pagina
             .Select(c => new CategoryDto(c.Id, c.Description, c.Finality))
             .ToListAsync(cancellationToken);
 
-        return new PaginatedResult<CategoryDto>(items, totalPages, totalItems, request.PageNumber, request.PageSize);
+        return new PaginatedResult<CategoryDto>(
+            items,
+            totalPages,
+            totalItems,
+            request.PageNumber,
+            request.PageSize
+        );
     }
 }

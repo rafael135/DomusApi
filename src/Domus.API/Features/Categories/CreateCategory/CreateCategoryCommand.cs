@@ -3,4 +3,5 @@ using MediatR;
 
 namespace Domus.Api.Features.Categories.CreateCategory;
 
-public record CreateCategoryCommand(string Description, TransactionCategoryType Finality) : IRequest<CreateCategoryResult>;
+public record CreateCategoryCommand(string Description, TransactionCategoryType Finality)
+    : IRequest<CreateCategoryResult>;

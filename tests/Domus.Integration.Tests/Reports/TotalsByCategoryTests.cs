@@ -43,13 +43,34 @@ public class TotalsByCategoryTests(DomusApiFactory factory) : IntegrationTestBas
     {
         var userResp = await Client.PostAsJsonAsync("/api/users", new { name = "Alice", age = 30 });
         var user = await userResp.Content.ReadFromJsonAsync<UserDto>();
-        var catResp = await Client.PostAsJsonAsync("/api/categories", new { description = "Mixed", finality = 3 });
+        var catResp = await Client.PostAsJsonAsync(
+            "/api/categories",
+            new { description = "Mixed", finality = 3 }
+        );
         var cat = await catResp.Content.ReadFromJsonAsync<CategoryDto>();
 
-        await Client.PostAsJsonAsync("/api/transactions",
-            new { description = "Income 1", value = 800m, type = 1, categoryId = cat!.Id, userId = user!.Id });
-        await Client.PostAsJsonAsync("/api/transactions",
-            new { description = "Expense 1", value = 250m, type = 2, categoryId = cat.Id, userId = user.Id });
+        await Client.PostAsJsonAsync(
+            "/api/transactions",
+            new
+            {
+                description = "Income 1",
+                value = 800m,
+                type = 1,
+                categoryId = cat!.Id,
+                userId = user!.Id,
+            }
+        );
+        await Client.PostAsJsonAsync(
+            "/api/transactions",
+            new
+            {
+                description = "Expense 1",
+                value = 250m,
+                type = 2,
+                categoryId = cat.Id,
+                userId = user.Id,
+            }
+        );
 
         var response = await Client.GetAsync("/api/reports/totals-by-category");
 
@@ -70,15 +91,39 @@ public class TotalsByCategoryTests(DomusApiFactory factory) : IntegrationTestBas
     {
         var userResp = await Client.PostAsJsonAsync("/api/users", new { name = "Alice", age = 30 });
         var user = await userResp.Content.ReadFromJsonAsync<UserDto>();
-        var cat1Resp = await Client.PostAsJsonAsync("/api/categories", new { description = "Food", finality = 1 });
+        var cat1Resp = await Client.PostAsJsonAsync(
+            "/api/categories",
+            new { description = "Food", finality = 1 }
+        );
         var cat1 = await cat1Resp.Content.ReadFromJsonAsync<CategoryDto>();
-        var cat2Resp = await Client.PostAsJsonAsync("/api/categories", new { description = "Salary", finality = 2 });
+        var cat2Resp = await Client.PostAsJsonAsync(
+            "/api/categories",
+            new { description = "Salary", finality = 2 }
+        );
         var cat2 = await cat2Resp.Content.ReadFromJsonAsync<CategoryDto>();
 
-        await Client.PostAsJsonAsync("/api/transactions",
-            new { description = "Lunch", value = 100m, type = 2, categoryId = cat1!.Id, userId = user!.Id });
-        await Client.PostAsJsonAsync("/api/transactions",
-            new { description = "Paycheck", value = 2000m, type = 1, categoryId = cat2!.Id, userId = user.Id });
+        await Client.PostAsJsonAsync(
+            "/api/transactions",
+            new
+            {
+                description = "Lunch",
+                value = 100m,
+                type = 2,
+                categoryId = cat1!.Id,
+                userId = user!.Id,
+            }
+        );
+        await Client.PostAsJsonAsync(
+            "/api/transactions",
+            new
+            {
+                description = "Paycheck",
+                value = 2000m,
+                type = 1,
+                categoryId = cat2!.Id,
+                userId = user.Id,
+            }
+        );
 
         var response = await Client.GetAsync("/api/reports/totals-by-category");
 

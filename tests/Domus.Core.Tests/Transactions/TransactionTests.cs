@@ -1,18 +1,20 @@
-using FluentAssertions;
-using Xunit;
+using Domus.Core.Domain.Shared.Exceptions;
 using Domus.Core.Domain.Transactions;
 using Domus.Core.Domain.Transactions.Enums;
 using Domus.Core.Domain.Users;
-using Domus.Core.Domain.Shared.Exceptions;
+using FluentAssertions;
+using Xunit;
 
 namespace Domus.Core.Tests.Transactions
 {
     public class TransactionTests
     {
         private User CreateAdult() => User.Create("Adult", 30);
+
         private User CreateMinor() => User.Create("Minor", 16);
-        private TransactionCategory CreateCategory(TransactionCategoryType finality)
-            => TransactionCategory.Create("Cat", finality);
+
+        private TransactionCategory CreateCategory(TransactionCategoryType finality) =>
+            TransactionCategory.Create("Cat", finality);
 
         [Fact]
         public void Create_WithValidIncomeAndCompatibleCategory_ShouldSucceed()
@@ -38,9 +40,11 @@ namespace Domus.Core.Tests.Transactions
             var user = CreateAdult();
             var category = CreateCategory(TransactionCategoryType.Expense);
 
-            Action act = () => Transaction.Create("desc", value, TransactionType.Expense, category, user);
-            act.Should().Throw<FormException>()
-               .Where(e => ((FormException)e).Errors.ContainsKey("value"));
+            Action act = () =>
+                Transaction.Create("desc", value, TransactionType.Expense, category, user);
+            act.Should()
+                .Throw<FormException>()
+                .Where(e => ((FormException)e).Errors.ContainsKey("value"));
         }
 
         [Theory]
@@ -52,9 +56,11 @@ namespace Domus.Core.Tests.Transactions
             var user = CreateAdult();
             var category = CreateCategory(TransactionCategoryType.Expense);
 
-            Action act = () => Transaction.Create(desc, 10, TransactionType.Expense, category, user);
-            act.Should().Throw<FormException>()
-               .Where(e => ((FormException)e).Errors.ContainsKey("description"));
+            Action act = () =>
+                Transaction.Create(desc, 10, TransactionType.Expense, category, user);
+            act.Should()
+                .Throw<FormException>()
+                .Where(e => ((FormException)e).Errors.ContainsKey("description"));
         }
 
         [Fact]
@@ -63,13 +69,17 @@ namespace Domus.Core.Tests.Transactions
             var user = CreateAdult();
             var category = CreateCategory(TransactionCategoryType.Expense);
 
-            Action act = () => Transaction.Create("Incorrect", 50, TransactionType.Income, category, user);
-            act.Should().Throw<FormException>()
-               .Where(e => ((FormException)e).Errors.ContainsKey("type"));
+            Action act = () =>
+                Transaction.Create("Incorrect", 50, TransactionType.Income, category, user);
+            act.Should()
+                .Throw<FormException>()
+                .Where(e => ((FormException)e).Errors.ContainsKey("type"));
 
             var cat2 = CreateCategory(TransactionCategoryType.Income);
-            Action act2 = () => Transaction.Create("Incorrect", 50, TransactionType.Expense, cat2, user);
-            act2.Should().Throw<FormException>()
+            Action act2 = () =>
+                Transaction.Create("Incorrect", 50, TransactionType.Expense, cat2, user);
+            act2.Should()
+                .Throw<FormException>()
                 .Where(e => ((FormException)e).Errors.ContainsKey("type"));
         }
 
@@ -79,7 +89,8 @@ namespace Domus.Core.Tests.Transactions
             var user = CreateMinor();
             var category = CreateCategory(TransactionCategoryType.Income);
 
-            Action act = () => Transaction.Create("Nope", 10, TransactionType.Income, category, user);
+            Action act = () =>
+                Transaction.Create("Nope", 10, TransactionType.Income, category, user);
             act.Should().Throw<BusinessRuleException>();
         }
     }

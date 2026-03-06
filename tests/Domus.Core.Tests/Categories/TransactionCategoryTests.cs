@@ -1,8 +1,8 @@
-using FluentAssertions;
-using Xunit;
+using Domus.Core.Domain.Shared.Exceptions;
 using Domus.Core.Domain.Transactions;
 using Domus.Core.Domain.Transactions.Enums;
-using Domus.Core.Domain.Shared.Exceptions;
+using FluentAssertions;
+using Xunit;
 
 namespace Domus.Core.Tests.Categories
 {
@@ -24,8 +24,9 @@ namespace Domus.Core.Tests.Categories
         public void Create_WithInvalidDescription_ShouldThrow(string desc)
         {
             Action act = () => TransactionCategory.Create(desc, TransactionCategoryType.Income);
-            act.Should().Throw<FormException>()
-               .Where(e => ((FormException)e).Errors.ContainsKey("description"));
+            act.Should()
+                .Throw<FormException>()
+                .Where(e => ((FormException)e).Errors.ContainsKey("description"));
         }
     }
 }

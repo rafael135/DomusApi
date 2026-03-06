@@ -17,15 +17,23 @@ public class CreateCategoryHandler : IRequestHandler<CreateCategoryCommand, Crea
         _logger = logger;
     }
 
-    public async Task<CreateCategoryResult> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<CreateCategoryResult> Handle(
+        CreateCategoryCommand request,
+        CancellationToken cancellationToken
+    )
     {
-        TransactionCategory category = TransactionCategory.Create(request.Description, request.Finality);
+        TransactionCategory category = TransactionCategory.Create(
+            request.Description,
+            request.Finality
+        );
 
         _dbContext.TransactionCategories.Add(category);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Category created with ID: {CategoryId}", category.Id);
 
-        return new CreateCategoryResult(new CategoryDto(category.Id, category.Description, category.Finality));
+        return new CreateCategoryResult(
+            new CategoryDto(category.Id, category.Description, category.Finality)
+        );
     }
 }

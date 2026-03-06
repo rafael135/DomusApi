@@ -13,7 +13,10 @@ public class DeleteUserTests(DomusApiFactory factory) : IntegrationTestBase(fact
     [Fact]
     public async Task DELETE_ExistingUser_Returns200()
     {
-        var createResponse = await Client.PostAsJsonAsync("/api/users", new { name = "Alice", age = 25 });
+        var createResponse = await Client.PostAsJsonAsync(
+            "/api/users",
+            new { name = "Alice", age = 25 }
+        );
         var created = await createResponse.Content.ReadFromJsonAsync<UserDto>();
 
         var deleteResponse = await Client.DeleteAsync($"/api/users/{created!.Id}");
@@ -33,28 +36,39 @@ public class DeleteUserTests(DomusApiFactory factory) : IntegrationTestBase(fact
     public async Task DELETE_UserWithTransactions_CascadeDeletesTransactions()
     {
         // Arrange: create user, category and transaction
-        var userResponse = await Client.PostAsJsonAsync("/api/users", new { name = "Alice", age = 25 });
+        var userResponse = await Client.PostAsJsonAsync(
+            "/api/users",
+            new { name = "Alice", age = 25 }
+        );
         var user = await userResponse.Content.ReadFromJsonAsync<UserDto>();
 
-        var catResponse = await Client.PostAsJsonAsync("/api/categories", new { description = "Food", finality = 1 });
+        var catResponse = await Client.PostAsJsonAsync(
+            "/api/categories",
+            new { description = "Food", finality = 1 }
+        );
         var category = await catResponse.Content.ReadFromJsonAsync<dynamic>();
         var categoryId = ((System.Text.Json.JsonElement)category!).GetProperty("id").GetGuid();
 
-        await Client.PostAsJsonAsync("/api/transactions", new
-        {
-            description = "Lunch",
-            value = 50.0m,
-            type = 2, // Expense
-            categoryId,
-            userId = user!.Id
-        });
+        await Client.PostAsJsonAsync(
+            "/api/transactions",
+            new
+            {
+                description = "Lunch",
+                value = 50.0m,
+                type = 2, // Expense
+                categoryId,
+                userId = user!.Id,
+            }
+        );
 
         // Act: delete the user
         await Client.DeleteAsync($"/api/users/{user.Id}");
 
         // Assert: no transactions remain
         var txResponse = await Client.GetAsync($"/api/transactions?userId={user.Id}");
-        var transactions = await txResponse.Content.ReadFromJsonAsync<PaginatedResult<TransactionDto>>();
+        var transactions = await txResponse.Content.ReadFromJsonAsync<
+            PaginatedResult<TransactionDto>
+        >();
         transactions!.totalItems.Should().Be(0);
     }
 }

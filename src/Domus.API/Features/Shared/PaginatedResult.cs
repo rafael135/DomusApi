@@ -1,4 +1,3 @@
-
 namespace Domus.Api.Features.Shared;
 
 public record PaginatedResult<T>(

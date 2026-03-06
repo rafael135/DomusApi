@@ -11,12 +11,16 @@ public class UpdateUserTests(DomusApiFactory factory) : IntegrationTestBase(fact
     [Fact]
     public async Task PUT_ExistingUser_Returns200WithUpdatedData()
     {
-        var createResponse = await Client.PostAsJsonAsync("/api/users", new { name = "Alice", age = 25 });
+        var createResponse = await Client.PostAsJsonAsync(
+            "/api/users",
+            new { name = "Alice", age = 25 }
+        );
         var created = await createResponse.Content.ReadFromJsonAsync<UserDto>();
 
         var updateResponse = await Client.PutAsJsonAsync(
             $"/api/users/{created!.Id}",
-            new { name = "Alice Updated", age = 26 });
+            new { name = "Alice Updated", age = 26 }
+        );
 
         updateResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         var updated = await updateResponse.Content.ReadFromJsonAsync<UserDto>();
@@ -30,7 +34,8 @@ public class UpdateUserTests(DomusApiFactory factory) : IntegrationTestBase(fact
     {
         var response = await Client.PutAsJsonAsync(
             $"/api/users/{Guid.NewGuid()}",
-            new { name = "Ghost", age = 30 });
+            new { name = "Ghost", age = 30 }
+        );
 
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
@@ -38,12 +43,16 @@ public class UpdateUserTests(DomusApiFactory factory) : IntegrationTestBase(fact
     [Fact]
     public async Task PUT_InvalidData_Returns400()
     {
-        var createResponse = await Client.PostAsJsonAsync("/api/users", new { name = "Alice", age = 25 });
+        var createResponse = await Client.PostAsJsonAsync(
+            "/api/users",
+            new { name = "Alice", age = 25 }
+        );
         var created = await createResponse.Content.ReadFromJsonAsync<UserDto>();
 
         var response = await Client.PutAsJsonAsync(
             $"/api/users/{created!.Id}",
-            new { name = "", age = 25 });
+            new { name = "", age = 25 }
+        );
 
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }

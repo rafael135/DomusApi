@@ -6,6 +6,4 @@ namespace Domus.Integration.Tests;
 /// <see cref="DomusApiFactory"/> instance (one container for the entire test session).
 /// </summary>
 [CollectionDefinition("IntegrationTests")]
-public class IntegrationTestCollection : ICollectionFixture<DomusApiFactory>
-{
-}
+public class IntegrationTestCollection : ICollectionFixture<DomusApiFactory> { }

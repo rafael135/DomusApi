@@ -18,9 +18,15 @@ public class UpdateUserHandler : IRequestHandler<UpdateUserCommand, UpdateUserRe
         _logger = logger;
     }
 
-    public async Task<UpdateUserResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async Task<UpdateUserResult> Handle(
+        UpdateUserCommand request,
+        CancellationToken cancellationToken
+    )
     {
-        User? user = await _dbContext.Users.FindAsync(new object[] { request.UserId }, cancellationToken);
+        User? user = await _dbContext.Users.FindAsync(
+            new object[] { request.UserId },
+            cancellationToken
+        );
 
         if (user is null)
         {

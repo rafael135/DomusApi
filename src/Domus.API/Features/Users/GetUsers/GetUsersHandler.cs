@@ -32,13 +32,11 @@ public class GetUsersHandler : IRequestHandler<GetUsersQuery, PaginatedResult<Us
         int totalItems = query.Count();
         int totalPages = (int)Math.Ceiling(totalItems / (double)request.pageSize);
 
-
         var result = query
             .Skip((request.pageNumber - 1) * request.pageSize)
             .Take(request.pageSize)
             .Select(u => new UserDto(u.Id, u.Name, u.Age))
             .ToList();
-
 
         return new PaginatedResult<UserDto>(
             result,

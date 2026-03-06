@@ -44,16 +44,46 @@ public class TotalsByPersonTests(DomusApiFactory factory) : IntegrationTestBase(
         // Create user and category
         var userResp = await Client.PostAsJsonAsync("/api/users", new { name = "Alice", age = 30 });
         var user = await userResp.Content.ReadFromJsonAsync<UserDto>();
-        var catBothResp = await Client.PostAsJsonAsync("/api/categories", new { description = "Mixed", finality = 3 });
+        var catBothResp = await Client.PostAsJsonAsync(
+            "/api/categories",
+            new { description = "Mixed", finality = 3 }
+        );
         var catBoth = await catBothResp.Content.ReadFromJsonAsync<CategoryDto>();
 
         // 2 incomes: 1000 + 500 = 1500; 1 expense: 300
-        await Client.PostAsJsonAsync("/api/transactions",
-            new { description = "Salary", value = 1000m, type = 1, categoryId = catBoth!.Id, userId = user!.Id });
-        await Client.PostAsJsonAsync("/api/transactions",
-            new { description = "Bonus", value = 500m, type = 1, categoryId = catBoth.Id, userId = user.Id });
-        await Client.PostAsJsonAsync("/api/transactions",
-            new { description = "Rent", value = 300m, type = 2, categoryId = catBoth.Id, userId = user.Id });
+        await Client.PostAsJsonAsync(
+            "/api/transactions",
+            new
+            {
+                description = "Salary",
+                value = 1000m,
+                type = 1,
+                categoryId = catBoth!.Id,
+                userId = user!.Id,
+            }
+        );
+        await Client.PostAsJsonAsync(
+            "/api/transactions",
+            new
+            {
+                description = "Bonus",
+                value = 500m,
+                type = 1,
+                categoryId = catBoth.Id,
+                userId = user.Id,
+            }
+        );
+        await Client.PostAsJsonAsync(
+            "/api/transactions",
+            new
+            {
+                description = "Rent",
+                value = 300m,
+                type = 2,
+                categoryId = catBoth.Id,
+                userId = user.Id,
+            }
+        );
 
         var response = await Client.GetAsync("/api/reports/totals-by-person");
 
@@ -72,17 +102,41 @@ public class TotalsByPersonTests(DomusApiFactory factory) : IntegrationTestBase(
     [Fact]
     public async Task GET_MultipleUsers_SumsTotalsCorrectly()
     {
-        var user1Resp = await Client.PostAsJsonAsync("/api/users", new { name = "Alice", age = 30 });
+        var user1Resp = await Client.PostAsJsonAsync(
+            "/api/users",
+            new { name = "Alice", age = 30 }
+        );
         var user1 = await user1Resp.Content.ReadFromJsonAsync<UserDto>();
         var user2Resp = await Client.PostAsJsonAsync("/api/users", new { name = "Bob", age = 25 });
         var user2 = await user2Resp.Content.ReadFromJsonAsync<UserDto>();
-        var catResp = await Client.PostAsJsonAsync("/api/categories", new { description = "Mixed", finality = 3 });
+        var catResp = await Client.PostAsJsonAsync(
+            "/api/categories",
+            new { description = "Mixed", finality = 3 }
+        );
         var cat = await catResp.Content.ReadFromJsonAsync<CategoryDto>();
 
-        await Client.PostAsJsonAsync("/api/transactions",
-            new { description = "Alice income", value = 1000m, type = 1, categoryId = cat!.Id, userId = user1!.Id });
-        await Client.PostAsJsonAsync("/api/transactions",
-            new { description = "Bob expense", value = 200m, type = 2, categoryId = cat.Id, userId = user2!.Id });
+        await Client.PostAsJsonAsync(
+            "/api/transactions",
+            new
+            {
+                description = "Alice income",
+                value = 1000m,
+                type = 1,
+                categoryId = cat!.Id,
+                userId = user1!.Id,
+            }
+        );
+        await Client.PostAsJsonAsync(
+            "/api/transactions",
+            new
+            {
+                description = "Bob expense",
+                value = 200m,
+                type = 2,
+                categoryId = cat.Id,
+                userId = user2!.Id,
+            }
+        );
 
         var response = await Client.GetAsync("/api/reports/totals-by-person");
 

@@ -7,18 +7,25 @@ using Microsoft.Extensions.Logging;
 
 namespace Domus.Api.Features.Transactions.ListTransaction;
 
-public class ListTransactionsHandler : IRequestHandler<ListTransactionsQuery, PaginatedResult<TransactionDto>>
+public class ListTransactionsHandler
+    : IRequestHandler<ListTransactionsQuery, PaginatedResult<TransactionDto>>
 {
     private readonly DomusDbContext _dbContext;
     private readonly ILogger<ListTransactionsHandler> _logger;
 
-    public ListTransactionsHandler(DomusDbContext dbContext, ILogger<ListTransactionsHandler> logger)
+    public ListTransactionsHandler(
+        DomusDbContext dbContext,
+        ILogger<ListTransactionsHandler> logger
+    )
     {
         _dbContext = dbContext;
         _logger = logger;
     }
 
-    public async Task<PaginatedResult<TransactionDto>> Handle(ListTransactionsQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedResult<TransactionDto>> Handle(
+        ListTransactionsQuery request,
+        CancellationToken cancellationToken
+    )
     {
         var query = _dbContext.Transactions.AsQueryable();
 
@@ -46,6 +53,12 @@ public class ListTransactionsHandler : IRequestHandler<ListTransactionsQuery, Pa
             ))
             .ToListAsync(cancellationToken);
 
-        return new PaginatedResult<TransactionDto>(items, totalPages, totalItems, request.PageNumber, request.PageSize);
+        return new PaginatedResult<TransactionDto>(
+            items,
+            totalPages,
+            totalItems,
+            request.PageNumber,
+            request.PageSize
+        );
     }
 }
