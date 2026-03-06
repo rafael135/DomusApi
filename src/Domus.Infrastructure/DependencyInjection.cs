@@ -24,7 +24,11 @@ public static class DependencyInjection
     {
         services.AddMemoryCache();
 
-        string? connectionString = configuration.GetConnectionString("DefaultConnection");
+        string? connectionString = configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException(
+                "Connection string 'DefaultConnection' not found. " +
+                "Ensure appsettings.json has ConnectionStrings:DefaultConnection and " +
+                "ASPNETCORE_ENVIRONMENT is set correctly.");
         string? environment =
             configuration["ASPNETCORE_ENVIRONMENT"]
             ?? Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
