@@ -34,15 +34,6 @@ jobs:
       - name: Build
         run: dotnet build Domus.slnx --no-restore --configuration Release
 
-      - name: Upload build output
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-output
-          path: |
-            src/**/bin/Release/
-            tests/**/bin/Release/
-          retention-days: 1
-
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
@@ -57,15 +48,17 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
-      - name: Download build output
-        uses: actions/download-artifact@v4
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
         with:
-          name: build-output
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/*.slnx') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
       - name: Run unit tests
         run: >
           dotnet test tests/Domus.Core.Tests
-          --no-build
           --configuration Release
           --collect:"XPlat Code Coverage"
           --results-directory coverage/unit
@@ -92,17 +85,19 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
-      - name: Download build output
-        uses: actions/download-artifact@v4
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
         with:
-          name: build-output
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/*.slnx') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
       - name: Run integration tests
         env:
           TESTCONTAINERS_RYUK_DISABLED: "true"
         run: >
           dotnet test tests/Domus.Integration.Tests
-          --no-build
           --configuration Release
           --collect:"XPlat Code Coverage"
           --results-directory coverage/integration
